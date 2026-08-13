@@ -10,8 +10,17 @@ router = APIRouter(prefix='/contacts', tags=['contacts'])
 
 @router.get("/", response_model=list[ContactResponse])
 async def get_contacts(limit: int = Query(10, ge=10, le=500), offset: int = Query(0, ge=0),
+                       query: str | None = Query(None),
                        db: AsyncSession = Depends(get_db)):
-    contacts = await repositories_contacts.get_contacts(limit, offset, db)
+    contacts = await repositories_contacts.get_contacts(limit, offset, query, db)
+    return contacts
+
+
+@router.get("/birthdays", response_model=list[ContactResponse])
+async def get_birthdays(
+    db: AsyncSession = Depends(get_db)
+):
+    contacts = await repositories_contacts.get_birthdays(db)
     return contacts
 
 
