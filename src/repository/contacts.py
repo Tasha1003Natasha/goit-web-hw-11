@@ -23,11 +23,9 @@ async def get_contacts(limit: int, offset: int, query: str | None,
     return contacts.scalars().all()
 
 
-async def get_birthdays(
-    db: AsyncSession
-):
+async def get_birthdays(db: AsyncSession):
     today = date.today()
-    end_date = today + timedelta(days=7)
+
     stmt = select(Contact)
     result = await db.execute(stmt)
     contacts = result.scalars().all()
@@ -35,10 +33,15 @@ async def get_birthdays(
     birthdays = []
 
     for contact in contacts:
-        birthday_this_year = contact.birthday.replace(year=today.year)
+        for i in range(7):
+            current_date = today + timedelta(days=i)
 
-        if today <= birthday_this_year <= end_date:
-            birthdays.append(contact)
+            if (
+                contact.birthday.month == current_date.month
+                and contact.birthday.day == current_date.day
+            ):
+                birthdays.append(contact)
+                break
 
     return birthdays
 
