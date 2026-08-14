@@ -29,6 +29,9 @@ Contacts REST API built with FastAPI, SQLAlchemy, PostgreSQL, and Alembic.
 ├── docker-compose.yml
 ├── alembic.ini
 ├── requirements.txt
+├── frontend/
+│   ├── index.html
+│   └── script.js
 ├── migrations/
 │   ├── env.py
 │   └── versions/
@@ -125,6 +128,30 @@ http://127.0.0.1:8000
 http://127.0.0.1:8000/docs
 http://127.0.0.1:8000/redoc
 ```
+
+## Run Frontend
+
+The project includes a simple frontend for working with contacts:
+
+```text
+frontend/index.html
+```
+
+First, start the FastAPI backend:
+
+```bash
+uvicorn main:app --reload
+```
+
+Then open `frontend/index.html` in a browser.
+
+The frontend sends requests to:
+
+```text
+http://localhost:8000/api/contacts/
+```
+
+If you open `http://localhost:8000/api/contacts/` directly in the browser, you will see JSON data from the API. To use the visual interface, open the `frontend/index.html` file.
 
 ## API Endpoints
 
