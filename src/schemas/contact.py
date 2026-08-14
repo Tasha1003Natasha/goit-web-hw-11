@@ -30,5 +30,11 @@ class ContactUpdateSchema(ContactSchema):
 
 class ContactResponse(BaseModel):
     id: int
+    name: str
+    surname: str
+    email: str
+    phone: str
+    birthday: date
+    info: str | None = None
 
     model_config = ConfigDict(from_attributes=True)
